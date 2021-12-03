@@ -24,14 +24,16 @@ output "engine_version_actual" {
 }
 
 output "security_group_id" {
-  value = aws_security_group.main.id
+  description = "ID of the security group which manages access to the cluster."
+  value       = aws_security_group.main.id
 }
 
 output "subnet_group_name" {
-  value = aws_elasticache_subnet_group.main.name
+  description = "Name of the subnet group for this cluster."
+  value       = aws_elasticache_subnet_group.main.name
 }
 
 output "tags_all" {
-  description = "Map of tags assigned to the resource."
+  description = "Map of tags assigned to the cluster."
   value       = aws_elasticache_cluster.main.tags_all
 }

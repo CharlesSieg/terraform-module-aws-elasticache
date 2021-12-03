@@ -1,8 +1,8 @@
 resource "aws_elasticache_parameter_group" "main" {
   count       = length(var.parameters) > 0 ? 1 : 0
-  description = ""
-  family      = "memcached${replace(var.engine_version, "/\\.[\\d]+$/", "")}" # Strip the patch version from redis_version var
-  name        = "${var.environment}-${var.name}"
+  description = "Parameter group for ${var.cluster_id}"
+  family      = "memcached${replace(var.engine_version, "/\\.[\\d]+$/", "")}" # Strip the patch version.
+  name        = var.cluster_id
 
   dynamic "parameter" {
     for_each = var.parameters
@@ -18,7 +18,7 @@ resource "aws_elasticache_parameter_group" "main" {
 }
 
 resource "aws_elasticache_subnet_group" "main" {
-  name       = "${var.environment}-${var.app_name}"
+  name       = var.cluster_id
   subnet_ids = var.subnet_ids
 }
 
@@ -38,8 +38,6 @@ resource "aws_elasticache_cluster" "main" {
   preferred_availability_zones = var.preferred_availability_zones
   security_group_ids           = [module.aws_security_group.id]
   subnet_group_name            = module.aws_elasticache_subnet_group.main.name
-  tags = merge(var.tags, {
-    name = "foo"
-  })
+  tags                         = merge(var.tags, { Name = var.cluster_id })
 }
 

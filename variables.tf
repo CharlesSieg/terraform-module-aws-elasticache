@@ -1,9 +1,3 @@
-variable "apply_immediately" {
-  default     = true
-  description = "Specifies whether any modifications are applied immediately, or during the next maintenance window."
-  type        = bool
-}
-
 variable "alarm_actions" {
   default     = []
   description = "Alarm action list"
@@ -22,14 +16,22 @@ variable "alarm_memory_threshold_percentage" {
   type        = number
 }
 
-variable "allowed_cidr" {
-  description = "A list of Security Group ID's to allow access to."
+variable "allowed_cidrs" {
+  default     = []
+  description = "A list of CIDRs to allow access to."
   type        = list(string)
 }
 
-variable "additional_security_group" {
-  description = "A list of Security Group ID's to allow access to."
+variable "additional_security_groups" {
+  default     = []
+  description = "A list of Security Group IDs to allow access to."
   type        = string
+}
+
+variable "apply_immediately" {
+  default     = true
+  description = "Specifies whether any modifications are applied immediately, or during the next maintenance window."
+  type        = bool
 }
 
 variable "az_mode" {
@@ -46,11 +48,6 @@ variable "cluster_id" {
 variable "engine_version" {
   default     = "4.0.10"
   description = "Version number of the cache engine to be used."
-  type        = string
-}
-
-variable "environment" {
-  description = "env to deploy into, should typically dev/staging/prod"
   type        = string
 }
 
@@ -114,17 +111,17 @@ variable "preferred_availability_zones" {
 }
 
 variable "subnet_ids" {
-  description = "List of VPC Subnet IDs for the cache subnet group."
+  description = "Required. List of VPC Subnet IDs for the cache subnet group."
   type        = list(string)
 }
 
 variable "tags" {
   default     = {}
-  description = " Key-value map of resource tags."
+  description = "Key-value map of resource tags."
   type        = map(string)
 }
 
 variable "vpc_id" {
-  description = "VPC ID"
+  description = "Required. ID of the VPC in which this cluster is provisioned."
   type        = string
 }
