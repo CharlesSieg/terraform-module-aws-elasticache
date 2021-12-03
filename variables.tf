@@ -1,3 +1,9 @@
+variable "additional_security_groups" {
+  default     = []
+  description = "A list of Security Group IDs to allow access to."
+  type        = string
+}
+
 variable "alarm_actions" {
   default     = []
   description = "Alarm action list"
@@ -22,12 +28,6 @@ variable "allowed_cidrs" {
   type        = list(string)
 }
 
-variable "additional_security_groups" {
-  default     = []
-  description = "A list of Security Group IDs to allow access to."
-  type        = string
-}
-
 variable "apply_immediately" {
   default     = true
   description = "Specifies whether any modifications are applied immediately, or during the next maintenance window."
@@ -45,14 +45,15 @@ variable "cluster_id" {
   type        = string
 }
 
-variable "engine_version" {
-  default     = "4.0.10"
-  description = "Version number of the cache engine to be used."
+variable "domain_name" {
+  default     = null
+  description = "The domain name used in the Route 53 CNAME that points to the cache cluster DNS name."
   type        = string
 }
 
-variable "internal_dns_zone_id" {
-  description = "Internal dns zone id"
+variable "engine_version" {
+  default     = "4.0.10"
+  description = "Version number of the cache engine to be used."
   type        = string
 }
 
@@ -63,7 +64,7 @@ variable "maintenance_window" {
 }
 
 variable "node_type" {
-  default     = "cache.t2.small"
+  default     = "cache.t4g.micro"
   description = "The instance class used."
   type        = string
 }
@@ -123,5 +124,11 @@ variable "tags" {
 
 variable "vpc_id" {
   description = "Required. ID of the VPC in which this cluster is provisioned."
+  type        = string
+}
+
+variable "zone_id" {
+  default     = null
+  description = "The zone ID in which Route 53 entries are created."
   type        = string
 }
